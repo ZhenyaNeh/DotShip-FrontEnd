@@ -50,8 +50,6 @@ export const Header: FC<ComponentProps<'header'>> = (props) => {
           <Link href='/auth' className='text-primary font-bold link-hover'>
             Sign in
           </Link>
-
-          {/* <Separator className="mx-4 bg-zinc-400" orientation="vertical" /> */}
           <div className='mx-5 h-[90%] border-r-[1.5px] border-zinc-400' />
           <ThemeToggle />
         </div>
