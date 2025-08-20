@@ -1,5 +1,3 @@
-'use client';
-
 import React, { ComponentProps, FC } from 'react';
 import { cn } from '@/src/shared/lib/utils';
 import { Separator } from '@/src/shared/ui/Separator/Separator';
