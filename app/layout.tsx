@@ -34,7 +34,11 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => {
           disableTransitionOnChange
         >
           <Header />
-          {children}
+          <main className='w-full flex justify-center items-center flex-wrap pt-30'>
+            <div className='container max-w-7xl mx-auto flex justify-center items-center flex-wrap px-3'>
+              {children}
+            </div>
+          </main>
           <Footer />
         </ThemeProvider>
       </body>
