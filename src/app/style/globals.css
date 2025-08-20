@@ -136,9 +136,12 @@
   .link-hover {
     @apply transition-colors duration-200 hover:text-muted dark:hover:text-muted;
   }
+  .cell-style-size {
+    @apply w-[40px] h-[40px] max-sm:w-[25px] max-sm:h-[25px];
+  }
 }
 
-/* Styles */
+/* Styles Color */
 /* PASTEL-MAIN:       hex: #dfdad7   rgb: rgba(227,218,213,255)  oklch: oklch(0.8915 0.0069 53.43)  */
 /* BLUE-SECONDARY:    hex: #172a39   rgb: rgba(23,42,57,255)     oklch: oklch(0.2762 0.0374 243.53) */
 /* ORANGE-SECONDARY:  hex: #fc573b   rgb: rgba(252,87,59,255)    oklch: oklch(0.6763 0.2056 32.09)  */
