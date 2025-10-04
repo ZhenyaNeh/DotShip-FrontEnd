@@ -1,1 +1,1 @@
-export type { ShipType, ShipCordType } from "./model/types/shipTypes";
+export type { ShipType, ShipCordType } from './model/types/shipTypes';
