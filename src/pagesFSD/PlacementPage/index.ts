@@ -1,3 +1,3 @@
-import PlacementPage from "./ui/PlacementPage";
+import PlacementPage from './ui/PlacementPage';
 
 export default PlacementPage;

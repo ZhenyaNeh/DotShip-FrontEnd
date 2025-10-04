@@ -4,7 +4,7 @@ interface Props {
   id: string;
 }
 
-export const SymbolCell: FC<PropsWithChildren<Props>> = (props) => {
+export const SymbolCell: FC<PropsWithChildren<Props>> = props => {
   const { id, children } = props;
 
   if (!id) return null;
@@ -12,7 +12,7 @@ export const SymbolCell: FC<PropsWithChildren<Props>> = (props) => {
   return (
     <div
       id={id}
-      className='cell-style-size flex font-bold text-foreground justify-center items-center'
+      className='cell-style-size text-foreground flex items-center justify-center font-bold'
     >
       {children}
     </div>

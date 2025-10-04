@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export const ShipBoard = () => {
-  return (
-    <div>ShipBoard</div>
-  )
-}
+  return <div>ShipBoard</div>;
+};

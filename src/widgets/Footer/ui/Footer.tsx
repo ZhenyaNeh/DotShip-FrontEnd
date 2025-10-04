@@ -1,106 +1,143 @@
-import React, { ComponentProps, FC } from 'react';
-import { cn } from '@/src/shared/lib/utils';
-import { Separator } from '@/src/shared/ui/Separator/Separator';
+import Link from 'next/link';
+import React, { ComponentProps, FC, memo } from 'react';
 import {
-  FaFacebook,
-  FaTwitter,
-  FaInstagram,
   FaDiscord,
+  FaFacebook,
+  FaInstagram,
+  FaTwitter,
   FaYoutube,
 } from 'react-icons/fa';
-import Link from 'next/link';
 
-export const Footer: FC<ComponentProps<'footer'>> = (props) => {
+import { cn } from '@/src/shared/lib/clsx';
+import { Separator } from '@/src/shared/ui/Separator/Separator';
+
+// Константы для избежания повторного создания объектов
+const SOCIAL_LINKS = [
+  {
+    href: 'https://discordapp.com/users/626637579084890142',
+    icon: FaDiscord,
+    label: 'Discord',
+  },
+  {
+    href: 'https://www.youtube.com/channel/UCwNTxMcdUP1jrPBFOpTRrog',
+    icon: FaYoutube,
+    label: 'YouTube',
+  },
+  {
+    href: 'https://www.instagram.com/zhenya.nehaychik?igsh=a2tyZ2J4MDVsMGJ2',
+    icon: FaInstagram,
+    label: 'Instagram',
+  },
+  {
+    href: 'https://www.facebook.com/profile.php?id=100037764571500',
+    icon: FaFacebook,
+    label: 'Facebook',
+  },
+  {
+    href: 'https://x.com/ZNehajcik20464?s=09',
+    icon: FaTwitter,
+    label: 'Twitter',
+  },
+] as const;
+
+const NAV_LINKS = [
+  { href: '/games-catalog', label: 'Game Catalog' },
+  { href: '/friends', label: 'Friend' },
+  { href: '/statistics', label: 'Statistics' },
+] as const;
+
+const FOOTER_LINKS = [
+  { label: 'Site Map', href: '#' },
+  { label: 'Terms', href: '#' },
+  { label: 'Privacy', href: '#' },
+  { label: 'Disclaimer', href: '#' },
+] as const;
+
+export const Footer: FC<ComponentProps<'footer'>> = memo(props => {
   const { className, ...otherProps } = props;
 
   return (
     <footer
       className={cn(
-        'w-full h-60 flex justify-center flex-wrap backdrop-blur pt-10',
+        'flex h-60 w-full flex-col justify-center pt-10 backdrop-blur',
         className
       )}
       {...otherProps}
     >
-      {' '}
-      <div className='w-full flex justify-center items-center'>
+      <div className='flex w-full items-center justify-center'>
         <Separator
           className='container max-w-7xl bg-zinc-400'
           orientation='horizontal'
         />
       </div>
-      <div className='w-full flex justify-center items-center flex-wrap'>
-        <div className='container max-w-7xl flex justify-between p-3 backdrop-blur flex-wrap'>
-          <div className='flex-1 flex justify-start items-start'>
-            <div className='mr-10 flex justify-start items-start max-w-40 flex-wrap'>
-              <Link className='link-hover font-bold' href='/'>
-                Sea Battle
-              </Link>
-              <div className='mt-2 flex flex-col gap-0.5'>
-                <Link href='/games-catalog' className='link-hover'>
-                  Game Catalog
+
+      <div className='flex w-full flex-1 items-center justify-center'>
+        <div className='container flex max-w-7xl justify-between px-3 py-5 backdrop-blur'>
+          {/* Left Section - Navigation */}
+          <div className='flex flex-1 flex-col items-start'>
+            <Link className='link-hover mb-2 font-bold' href='/'>
+              Sea Battle
+            </Link>
+            <nav className='flex flex-col gap-1'>
+              {NAV_LINKS.map(link => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className='link-hover text-sm'
+                >
+                  {link.label}
                 </Link>
-                <Link href='/friends' className='link-hover'>
-                  Friend
-                </Link>
-                <Link href='/statistics' className='link-hover'>
-                  Statistics
-                </Link>
-              </div>
-            </div>
+              ))}
+            </nav>
           </div>
 
-          <div className='flex-1 flex justify-end items-start flex-wrap'>
-            <div className='flex justify-center h-8'>
-              <Link
-                className='text-primary font-bold link-hover'
-                href='https://discordapp.com/users/626637579084890142'
-              >
-                <FaDiscord size={32} />
-              </Link>
-              <div className='mx-5 h-[90%] border-r-[1.5px] border-zinc-400' />
-              <Link
-                className='text-primary font-bold link-hover'
-                href='https://www.youtube.com/channel/UCwNTxMcdUP1jrPBFOpTRrog'
-              >
-                <FaYoutube size={32} />
-              </Link>
-              <div className='mx-5 h-[90%] border-r-[1.5px] border-zinc-400' />
-              <Link
-                className='text-primary font-bold link-hover'
-                href='https://www.instagram.com/zhenya.nehaychik?igsh=a2tyZ2J4MDVsMGJ2'
-              >
-                <FaInstagram size={32} />
-              </Link>
-              <div className='mx-5 h-[90%] border-r-[1.5px] border-zinc-400' />
-              <Link
-                className='text-primary font-bold link-hover'
-                href='https://www.facebook.com/profile.php?id=100037764571500'
-              >
-                <FaFacebook size={32} />
-              </Link>
-              <div className='mx-5 h-[90%] border-r-[1.5px] border-zinc-400' />
-              <Link
-                className='text-primary font-bold link-hover'
-                href='https://x.com/ZNehajcik20464?s=09'
-              >
-                <FaTwitter size={32} />
-              </Link>
+          {/* Right Section - Social Links & Contact */}
+          <div className='flex flex-1 flex-col items-end gap-3'>
+            {/* Social Links */}
+            <div className='flex items-center gap-3'>
+              {SOCIAL_LINKS.map((social, index) => (
+                <React.Fragment key={social.href}>
+                  <Link
+                    href={social.href}
+                    className='text-primary link-hover'
+                    aria-label={social.label}
+                  >
+                    <social.icon size={25} />
+                  </Link>
+                  {index < SOCIAL_LINKS.length - 1 && (
+                    <div className='h-6 border-r border-zinc-400' />
+                  )}
+                </React.Fragment>
+              ))}
             </div>
-            <div className='w-full flex justify-end items-start'>
-              <span>Contact us: (33)-360-6216</span>
-            </div>
-            <div className='w-full flex justify-end items-start'>
-              <span>Get gaming news and artTech promotions and offers!</span>
+
+            {/* Contact Info */}
+            <div className='text-right'>
+              <p className='text-sm'>Contact us: (33)-360-6216</p>
+              <p className='mt-1 text-sm'>
+                Get gaming news and artTech promotions and offers!
+              </p>
             </div>
           </div>
         </div>
       </div>
-      <div className='w-full flex justify-center items-center'>
-        <span className='mb-5'>
-          © 2024-2025 artTech All rights reserved. Site Map | Terms | Privacy |
-          Disclaimer
-        </span>
+
+      {/* Bottom Section - Copyright */}
+      <div className='flex w-full items-center justify-center py-5'>
+        <div className='text-center text-sm'>
+          <span>© 2024-2025 artTech All rights reserved. </span>
+          {FOOTER_LINKS.map((link, index) => (
+            <React.Fragment key={link.label}>
+              <Link href={link.href} className='link-hover mx-1'>
+                {link.label}
+              </Link>
+              {index < FOOTER_LINKS.length - 1 && '|'}
+            </React.Fragment>
+          ))}
+        </div>
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = 'Footer';

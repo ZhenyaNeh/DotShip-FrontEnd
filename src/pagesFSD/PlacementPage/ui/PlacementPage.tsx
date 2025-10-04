@@ -1,12 +1,13 @@
 'use client';
 
+import { DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
+import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 import React, { FC } from 'react';
+
 import { Board, BoardComponentTypes } from '@/src/features/Board';
 import { PlacementPanel } from '@/src/features/PlacementPanel/ui/PlacementPanel';
 import { ShipDock } from '@/src/features/ShipDock/ui/ShipDock';
 import { usePlacement } from '@/src/shared/hooks/usePlacement/usePlacement';
-import { DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
-import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 
 const PlacementPage: FC = () => {
   const {
@@ -43,12 +44,12 @@ const PlacementPage: FC = () => {
       >
         <div
           id='main-container'
-          className='w-full flex justify-center items-center flex-wrap'
+          className='flex w-full flex-wrap items-center justify-center'
         >
-          <h1 className='w-full text-2x text-center font-bold text-3xl mb-10'>
+          <h1 className='text-2x mb-10 w-full text-center text-3xl font-bold'>
             Arrange the ships
           </h1>
-          <div className='flex justify-between items-top w-full flex-wrap'>
+          <div className='items-top flex w-full flex-wrap justify-between'>
             <ShipDock />
             <Board type={BoardComponentTypes.PLACEMENT} />
             <PlacementPanel />

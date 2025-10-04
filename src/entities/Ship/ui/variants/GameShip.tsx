@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import { ShipType } from '../../model/types/shipTypes';
 
 interface Props {

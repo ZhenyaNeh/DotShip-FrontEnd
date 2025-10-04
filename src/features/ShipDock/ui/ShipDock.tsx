@@ -1,8 +1,9 @@
+import React, { FC, JSX, useMemo } from 'react';
+
 import { ShipType } from '@/src/entities/Ship';
 import { ShipComponentTypes } from '@/src/entities/Ship/model/types/shipTypes';
 import { Ship } from '@/src/entities/Ship/ui/Ship';
 import { usePlacement } from '@/src/shared/hooks/usePlacement/usePlacement';
-import React, { FC, JSX, useMemo } from 'react';
 
 export const ShipDock: FC = () => {
   const { ships } = usePlacement();
@@ -34,14 +35,14 @@ export const ShipDock: FC = () => {
   }, [ships]);
 
   return (
-    <div className='h-full w-full flex-1 justify-center items-center border border-border rounded-lg p-[15px] m-3'>
-      <h2 className='text-center font-bold text-2xl'>
+    <div className='border-border m-3 h-full w-full flex-1 items-center justify-center rounded-lg border p-[15px]'>
+      <h2 className='text-center text-2xl font-bold'>
         Drag the ships onto the board
       </h2>
       <div className=''>
         <div>{shipDock}</div>
       </div>
-      <h2 className='text-center text-border'>To rotate click on the ship</h2>
+      <h2 className='text-border text-center'>To rotate click on the ship</h2>
     </div>
   );
 };

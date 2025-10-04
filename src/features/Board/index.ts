@@ -1,2 +1,2 @@
-export { Board } from "./ui/Board";
-export { BoardComponentTypes } from "./model/types/boardTypes";
+export { Board } from './ui/Board';
+export { BoardComponentTypes } from './model/types/boardTypes';
