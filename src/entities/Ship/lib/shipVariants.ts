@@ -1,8 +1,9 @@
 import { cva } from 'class-variance-authority';
+
 import { ShipType, VariantType } from '../model/types/shipTypes';
 
 export const shipVariants = cva(
-  'static cursor-pointer outline-background rounded-lg max-sm:rounded-md bg-foreground relative bottom-[0.6px] right-[0.6px]',
+  'static cursor-pointer outline-background rounded-lg max-sm:rounded-md bg-foreground relative bottom-[1px] right-[1px]',
   {
     variants: {
       variant: {

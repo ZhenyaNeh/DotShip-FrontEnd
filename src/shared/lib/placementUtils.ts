@@ -84,7 +84,7 @@ export function placeShipsRandomly(ships: ShipType[]): ShipType[] {
 
   while (globalAttempts < maxGlobalAttempts) {
     const placedShips: ShipType[] = [];
-    const shipsToPlace = ships.map((ship) => ({ ...ship }));
+    const shipsToPlace = ships.map(ship => ({ ...ship }));
     let allShipsPlaced = true;
 
     for (const ship of shipsToPlace) {

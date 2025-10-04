@@ -1,6 +1,12 @@
-import { ShipType } from '@/src/entities/Ship';
-import { CollisionDetection, DragCancelEvent, DragEndEvent, DragOverEvent } from '@dnd-kit/core';
+import {
+  CollisionDetection,
+  DragCancelEvent,
+  DragEndEvent,
+  DragOverEvent,
+} from '@dnd-kit/core';
 import { Dispatch, SetStateAction } from 'react';
+
+import { ShipType } from '@/src/entities/Ship';
 
 export type PlacementContextType = {
   ships: ShipType[];

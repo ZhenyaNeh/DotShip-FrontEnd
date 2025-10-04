@@ -1,20 +1,21 @@
 'use client';
 
-import React, { FC, PropsWithChildren, useState, useEffect } from 'react';
-import { ShipType } from '../../model/types/shipTypes';
-import { getVariant, shipVariants } from '../../lib/shipVariants';
-import { cn } from '@/src/shared/lib/utils';
 import { useDraggable } from '@dnd-kit/core';
 import { motion, useAnimation, useMotionValue, useSpring } from 'framer-motion';
+import React, { FC, PropsWithChildren, useEffect } from 'react';
+
+import { getVariant, shipVariants } from '../../lib/shipVariants';
+import { ShipType } from '../../model/types/shipTypes';
+
 import { usePlacement } from '@/src/shared/hooks/usePlacement/usePlacement';
+import { cn } from '@/src/shared/lib/clsx';
 
 interface Props {
   ship: ShipType;
 }
 
-export const PlacementShip: FC<PropsWithChildren<Props>> = (props) => {
+export const PlacementShip: FC<PropsWithChildren<Props>> = props => {
   const { ship, children } = props;
-  const [isDragging, setIsDragging] = useState(false);
   const controls = useAnimation();
   const { rotateShip } = usePlacement();
   const x = useMotionValue(0);
@@ -23,9 +24,9 @@ export const PlacementShip: FC<PropsWithChildren<Props>> = (props) => {
   const springX = useSpring(x, { stiffness: 500, damping: 20 });
   const springY = useSpring(y, { stiffness: 500, damping: 20 });
 
-  const { attributes, listeners, setNodeRef, transform } = useDraggable(
-    { id: ship.id }
-  );
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: ship.id,
+  });
 
   const handleClickEvent = () => {
     if (!rotateShip(ship)) {
@@ -48,14 +49,11 @@ export const PlacementShip: FC<PropsWithChildren<Props>> = (props) => {
     if (transform) {
       x.set(transform.x);
       y.set(transform.y);
-      setIsDragging(true);
-    } else if (isDragging) {
+    } else {
       x.set(0);
       y.set(0);
-      setIsDragging(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transform, isDragging]);
+  }, [transform, x, y]);
 
   return (
     <motion.div
@@ -69,7 +67,7 @@ export const PlacementShip: FC<PropsWithChildren<Props>> = (props) => {
       className={cn(
         shipVariants({ variant: getVariant(ship) }),
         'bg-foreground',
-        isDragging ? 'outline-0 opacity-50 z-[-10px]' : 'outline-1 opacity-100'
+        transform ? 'z-[-10px] opacity-50 outline-0' : 'opacity-100 outline-1'
       )}
       onClick={handleClickEvent}
       whileHover={{ scale: 1.05, outline: 'none' }}

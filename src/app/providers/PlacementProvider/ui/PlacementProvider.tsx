@@ -1,9 +1,5 @@
 'use client';
 
-import { FC, PropsWithChildren, useCallback, useState } from 'react';
-import { PlacementContext } from '@/src/app/contexts/PlacementContext';
-import { ShipCordType, ShipType } from '@/src/entities/Ship';
-import { getStartupShips } from '@/src/shared/const/shipsStartupConst';
 import {
   CollisionDetection,
   DragCancelEvent,
@@ -11,6 +7,11 @@ import {
   DragOverEvent,
   rectIntersection,
 } from '@dnd-kit/core';
+import { FC, PropsWithChildren, useCallback, useState } from 'react';
+
+import { PlacementContext } from '@/src/app/contexts/PlacementContext';
+import { ShipCordType, ShipType } from '@/src/entities/Ship';
+import { getStartupShips } from '@/src/shared/const/shipsStartupConst';
 import {
   canPlaceShip,
   canRotate,
@@ -28,7 +29,7 @@ export const PlacementProvider: FC<PropsWithChildren> = ({ children }) => {
         const cell = document.querySelector(
           `.cell-class[data-id="cell-${startX}-${startY}"]`
         ) as HTMLElement | null;
-        if (cell) cell.style.backgroundColor = 'var(--muted-foreground)';
+        if (cell) cell.style.backgroundColor = 'var(--muted)';
       }
     }
     setHighlights({ x: x, y: y, w, h });
@@ -59,7 +60,7 @@ export const PlacementProvider: FC<PropsWithChildren> = ({ children }) => {
       const shipId = active.id as number;
       const newCell = over.id as string;
       const [x, y] = newCell?.split('-').slice(1).map(Number);
-      const currentShip = structuredClone(ships.find((s) => s.id === shipId));
+      const currentShip = structuredClone(ships.find(s => s.id === shipId));
 
       if (!currentShip) return;
 
@@ -67,7 +68,7 @@ export const PlacementProvider: FC<PropsWithChildren> = ({ children }) => {
 
       if (canPlaceShip(ships, currentShip)) {
         setShips(() =>
-          ships.map((ship) => (ship.id === shipId ? currentShip : ship))
+          ships.map(ship => (ship.id === shipId ? currentShip : ship))
         );
       }
     },
@@ -85,7 +86,7 @@ export const PlacementProvider: FC<PropsWithChildren> = ({ children }) => {
       const shipId = active.id as number;
       const cellId = over.id as string;
       const [x, y] = cellId?.split('-').slice(1).map(Number);
-      const ship = structuredClone(ships.find((s) => s.id === shipId));
+      const ship = structuredClone(ships.find(s => s.id === shipId));
 
       if (!ship) return;
 
@@ -111,15 +112,15 @@ export const PlacementProvider: FC<PropsWithChildren> = ({ children }) => {
     resetHighlights();
   }, [resetHighlights]);
 
-  const customCollisionDetection: CollisionDetection = (args) => {
+  const customCollisionDetection: CollisionDetection = args => {
     const { collisionRect, active } = args;
     if (!collisionRect || !active) return [];
 
     const shipId = active.id as number;
-    const currentShip = structuredClone(ships.find((s) => s.id === shipId));
+    const currentShip = structuredClone(ships.find(s => s.id === shipId));
 
     if (!currentShip) return [];
-    const offsetSetup = window.innerWidth >= 640 ? -25: -15;
+    const offsetSetup = window.innerWidth >= 640 ? -25 : -15;
 
     const offsetX = currentShip.cords.w < currentShip.cords.h ? offsetSetup : 0;
     const offsetY = currentShip.cords.w < currentShip.cords.h ? 0 : offsetSetup;
@@ -144,10 +145,9 @@ export const PlacementProvider: FC<PropsWithChildren> = ({ children }) => {
       if (ship.health === 1) return true;
 
       if (!canRotate(ships, ship)) return false;
-      console.log(ship.cords);
-      
-      setShips((prevShips) =>
-        prevShips.map((s) =>
+
+      setShips(prevShips =>
+        prevShips.map(s =>
           s.id === ship.id
             ? {
                 ...s,

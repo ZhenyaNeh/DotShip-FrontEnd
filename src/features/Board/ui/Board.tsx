@@ -1,7 +1,9 @@
 import { FC } from 'react';
+
 import { BoardComponentTypes } from '../model/types/boardTypes';
-import { PlacementBoard } from './variants/PlacementBoard';
+
 import { GameBoard } from './variants/GameBoard';
+import { PlacementBoard } from './variants/PlacementBoard';
 import { ShipBoard } from './variants/ShipBoard';
 
 interface Props {
