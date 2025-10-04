@@ -1,5 +1,6 @@
-import { PlacementContext } from '@/src/app/contexts/PlacementContext';
 import { useContext } from 'react';
+
+import { PlacementContext } from '@/src/app/contexts/PlacementContext';
 
 export const usePlacement = () => {
   const context = useContext(PlacementContext);
