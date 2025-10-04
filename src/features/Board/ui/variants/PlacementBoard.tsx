@@ -1,18 +1,17 @@
+import React, { FC } from 'react';
+
 import { CellComponentTypes } from '@/src/entities/Cell';
 import { Cell } from '@/src/entities/Cell/ui/Cell';
 import { getChar } from '@/src/shared/lib/getCharUtils';
-import React, { FC } from 'react';
 
 export const PlacementBoard: FC = () => {
   const gridSize = 10;
 
   return (
-    <div className='h-full w-full flex-1 justify-center items-center border border-border rounded-lg py-[15px] m-3'>
-      <h2 className='text-center font-bold text-2xl'>Your Board</h2>
-      <div className='flex justify-center items-center'>
-        <div
-          className='grid grid-cols-[repeat(12,40px)] max-sm:grid-cols-[repeat(12,25px)] gap-[3px] max-sm:gap-[2px] p-[15px]'
-        >
+    <div className='border-border m-3 h-full w-full flex-1 items-center justify-center rounded-lg border py-[15px]'>
+      <h2 className='text-center text-2xl font-bold'>Your Board</h2>
+      <div className='flex items-center justify-center'>
+        <div className='grid grid-cols-[repeat(12,40px)] gap-[3px] p-[15px] max-sm:grid-cols-[repeat(12,25px)] max-sm:gap-[2px]'>
           <Cell type={CellComponentTypes.SYMBOL} id='top-left' key='top-left' />
           {Array.from({ length: gridSize }).map((_, index) => (
             <Cell
