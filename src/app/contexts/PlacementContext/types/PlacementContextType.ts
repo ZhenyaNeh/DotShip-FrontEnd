@@ -6,7 +6,7 @@ import {
 } from '@dnd-kit/core';
 import { Dispatch, SetStateAction } from 'react';
 
-import { ShipType } from '@/src/entities/Ship';
+import { ShipType } from '@/src/shared/lib/types';
 
 export type PlacementContextType = {
   ships: ShipType[];
