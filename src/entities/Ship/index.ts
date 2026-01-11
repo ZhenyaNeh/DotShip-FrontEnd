@@ -1,1 +1,1 @@
-export type { ShipType, ShipCordType } from './model/types/shipTypes';
+export { Ship } from './ui/Ship';
