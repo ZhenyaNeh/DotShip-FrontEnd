@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 
-import { ShipComponentTypes, ShipType } from '../model/types/shipTypes';
-
 import { GameShip } from './variants/GameShip';
 import { PlacementShip } from './variants/PlacementShip';
+import { ShipComponentTypes, ShipType } from '@/src/shared/lib/types';
 
 interface Props {
   type: ShipComponentTypes;

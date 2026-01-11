@@ -5,10 +5,10 @@ import { motion, useAnimation, useMotionValue, useSpring } from 'framer-motion';
 import React, { FC, PropsWithChildren, useEffect } from 'react';
 
 import { getVariant, shipVariants } from '../../lib/shipVariants';
-import { ShipType } from '../../model/types/shipTypes';
 
-import { usePlacement } from '@/src/shared/hooks/usePlacement/usePlacement';
+import { usePlacement } from '@/src/shared/hooks';
 import { cn } from '@/src/shared/lib/clsx';
+import { ShipType } from '@/src/shared/lib/types';
 
 interface Props {
   ship: ShipType;
@@ -67,7 +67,8 @@ export const PlacementShip: FC<PropsWithChildren<Props>> = props => {
       className={cn(
         shipVariants({ variant: getVariant(ship) }),
         'bg-foreground',
-        transform ? 'z-[-10px] opacity-50 outline-0' : 'opacity-100 outline-1'
+        transform ? 'z-[10px] opacity-50' : 'opacity-100',
+        ship.x > 0 && 'absolute'
       )}
       onClick={handleClickEvent}
       whileHover={{ scale: 1.05, outline: 'none' }}

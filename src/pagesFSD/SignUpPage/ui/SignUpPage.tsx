@@ -1,7 +1,12 @@
-import { FC } from 'react';
+import { Loader2 } from 'lucide-react';
+import { FC, Suspense } from 'react';
 
-import { SignUpForm } from '@/src/widgets/Auth';
+import { SignUpForm } from '@/src/features/Auth';
 
 export const SignUpPage: FC = () => {
-  return <SignUpForm />;
+  return (
+    <Suspense fallback={<Loader2 className='animate-spin' />}>
+      <SignUpForm />
+    </Suspense>
+  );
 };

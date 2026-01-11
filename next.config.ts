@@ -16,6 +16,18 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'avatars.yandex.net',
       },
+      {
+        protocol: 'http',
+        hostname: 'dot-ship.com',
+        port: '5000',
+        pathname: '/game/photo/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'dot-ship.com',
+        port: '5000',
+        pathname: '/user/avatar/**',
+      },
     ],
   },
 };
