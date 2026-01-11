@@ -1,9 +1,8 @@
 import React, { FC, JSX, useMemo } from 'react';
 
-import { ShipType } from '@/src/entities/Ship';
-import { ShipComponentTypes } from '@/src/entities/Ship/model/types/shipTypes';
 import { Ship } from '@/src/entities/Ship/ui/Ship';
-import { usePlacement } from '@/src/shared/hooks/usePlacement/usePlacement';
+import { usePlacement } from '@/src/shared/hooks';
+import { ShipComponentTypes, ShipType } from '@/src/shared/lib/types';
 
 export const ShipDock: FC = () => {
   const { ships } = usePlacement();
@@ -20,12 +19,15 @@ export const ShipDock: FC = () => {
     }
 
     return Object.entries(groupedShips)
-      .sort(([a], [b]) => Number(b) - Number(a)) // Сортируем от большего к меньшему
+      .sort(([a], [b]) => Number(b) - Number(a))
       .map(([size, shipsGroup]) => (
         <div key={size} className='flex'>
           {shipsGroup.map((ship, index) =>
-            ship.cords.x < 0 || ship.cords.y < 0 ? (
-              <div key={`${size}-${index}`} className='p-[8px] max-sm:p-[5px]'>
+            ship.x < 0 || ship.y < 0 ? (
+              <div
+                key={`${size}-${index}`}
+                className='relative z-1 p-[8px] max-sm:p-[5px]'
+              >
                 <Ship type={ShipComponentTypes.PLACEMENT} ship={ship} />
               </div>
             ) : null
@@ -39,7 +41,7 @@ export const ShipDock: FC = () => {
       <h2 className='text-center text-2xl font-bold'>
         Drag the ships onto the board
       </h2>
-      <div className=''>
+      <div className='relative'>
         <div>{shipDock}</div>
       </div>
       <h2 className='text-border text-center'>To rotate click on the ship</h2>

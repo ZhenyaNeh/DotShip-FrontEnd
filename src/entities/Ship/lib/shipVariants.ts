@@ -1,9 +1,9 @@
 import { cva } from 'class-variance-authority';
 
-import { ShipType, VariantType } from '../model/types/shipTypes';
+import { ShipType, VariantType } from '@/src/shared/lib/types';
 
 export const shipVariants = cva(
-  'static cursor-pointer outline-background rounded-lg max-sm:rounded-md bg-foreground relative bottom-[1px] right-[1px]',
+  'static cursor-pointer rounded-lg max-sm:rounded-md bg-foreground left-[-2%] top-[-2%] max-sm:left-[-4%] max-sm:top-[-4%]',
   {
     variants: {
       variant: {
@@ -21,4 +21,4 @@ export const shipVariants = cva(
 );
 
 export const getVariant = (ship: ShipType) =>
-  `ship_${Math.max(ship.cords.w + 1, ship.cords.h + 1)}_${ship.cords.w > ship.cords.h ? 'hor' : 'vert'}` as VariantType;
+  `ship_${Math.max(ship.w + 1, ship.h + 1)}_${ship.w > ship.h ? 'hor' : 'vert'}` as VariantType;

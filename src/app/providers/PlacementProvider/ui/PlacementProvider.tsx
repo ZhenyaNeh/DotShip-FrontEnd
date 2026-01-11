@@ -10,7 +10,6 @@ import {
 import { FC, PropsWithChildren, useCallback, useState } from 'react';
 
 import { PlacementContext } from '@/src/app/contexts/PlacementContext';
-import { ShipCordType, ShipType } from '@/src/entities/Ship';
 import { getStartupShips } from '@/src/shared/const/shipsStartupConst';
 import {
   canPlaceShip,
@@ -18,6 +17,7 @@ import {
   getNormalizedCords,
   placeShipsRandomly,
 } from '@/src/shared/lib/placementUtils';
+import { ShipCordType, ShipType } from '@/src/shared/lib/types';
 
 export const PlacementProvider: FC<PropsWithChildren> = ({ children }) => {
   const [ships, setShips] = useState<ShipType[]>(getStartupShips());
@@ -64,11 +64,15 @@ export const PlacementProvider: FC<PropsWithChildren> = ({ children }) => {
 
       if (!currentShip) return;
 
-      currentShip.cords = getNormalizedCords({ ...currentShip.cords, x, y });
+      const currentNormalizedShip = getNormalizedCords({
+        ...currentShip,
+        x,
+        y,
+      });
 
-      if (canPlaceShip(ships, currentShip)) {
+      if (canPlaceShip(ships, currentNormalizedShip)) {
         setShips(() =>
-          ships.map(ship => (ship.id === shipId ? currentShip : ship))
+          ships.map(ship => (ship.id === shipId ? currentNormalizedShip : ship))
         );
       }
     },
@@ -90,10 +94,10 @@ export const PlacementProvider: FC<PropsWithChildren> = ({ children }) => {
 
       if (!ship) return;
 
-      ship.cords = getNormalizedCords({ ...ship.cords, x, y });
+      const normalizedShip = getNormalizedCords({ ...ship, x, y });
 
-      if (canPlaceShip(ships, ship)) {
-        setHighlightCells(ship.cords);
+      if (canPlaceShip(ships, normalizedShip)) {
+        setHighlightCells(normalizedShip);
       }
     },
     [resetHighlights, setHighlightCells, ships]
@@ -122,8 +126,8 @@ export const PlacementProvider: FC<PropsWithChildren> = ({ children }) => {
     if (!currentShip) return [];
     const offsetSetup = window.innerWidth >= 640 ? -25 : -15;
 
-    const offsetX = currentShip.cords.w < currentShip.cords.h ? offsetSetup : 0;
-    const offsetY = currentShip.cords.w < currentShip.cords.h ? 0 : offsetSetup;
+    const offsetX = currentShip.w < currentShip.h ? offsetSetup : 0;
+    const offsetY = currentShip.w < currentShip.h ? 0 : offsetSetup;
 
     const adjustedCollisionRect = {
       top: collisionRect.top + offsetX,
@@ -151,12 +155,10 @@ export const PlacementProvider: FC<PropsWithChildren> = ({ children }) => {
           s.id === ship.id
             ? {
                 ...s,
-                cords: {
-                  x: s.cords.x,
-                  y: s.cords.y,
-                  w: s.cords.h,
-                  h: s.cords.w,
-                },
+                x: s.x,
+                y: s.y,
+                w: s.h,
+                h: s.w,
               }
             : s
         )
