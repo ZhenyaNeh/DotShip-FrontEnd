@@ -1,5 +1,4 @@
-import { ShipCordType, ShipType } from '@/src/entities/Ship';
-import { Cell } from '@/src/entities/Ship/model/types/shipTypes';
+import { Cell, ShipCordType, ShipType } from './types';
 
 // Возвращает: true, если точка за пределами поля, иначе false
 export function outOfBounds({ x, y }: Cell): boolean {
@@ -9,8 +8,15 @@ export function outOfBounds({ x, y }: Cell): boolean {
 export function shipInBoard({ x, y, w, h }: ShipCordType) {
   return !outOfBounds({ x, y }) && !outOfBounds({ x: x + h, y: y + w });
 }
-export function getNormalizedCords({ x, y, w, h }: ShipCordType): ShipCordType {
-  return { x: Math.min(x, 9 - h), y: Math.min(y, 9 - w), w, h };
+export function getNormalizedCords({
+  id,
+  x,
+  y,
+  w,
+  h,
+  health,
+}: ShipType): ShipType {
+  return { id, x: Math.min(x, 9 - h), y: Math.min(y, 9 - w), w, h, health };
 }
 
 export function equalsCell(a: Cell, b: Cell): boolean {
@@ -44,12 +50,18 @@ export function canPlaceShip(
   ship: ShipType
 ): boolean {
   // Проверка выхода за границы доски
-  if (!shipInBoard(ship.cords)) {
+  if (!shipInBoard({ x: ship.x, y: ship.y, w: ship.w, h: ship.h })) {
     return false;
   }
 
   for (const shipInner of shipPositions) {
-    if (shipInner.id !== ship.id && shipOverlaps(shipInner.cords, ship.cords)) {
+    if (
+      shipInner.id !== ship.id &&
+      shipOverlaps(
+        { x: shipInner.x, y: shipInner.y, w: shipInner.w, h: shipInner.h },
+        { x: ship.x, y: ship.y, w: ship.w, h: ship.h }
+      )
+    ) {
       return false;
     }
   }
@@ -59,14 +71,19 @@ export function canPlaceShip(
 export function canRotate(board: ShipType[], ship: ShipType): boolean {
   const rotationShip: ShipType = {
     ...ship,
-    cords: {
-      ...ship.cords,
-      w: ship.cords.h,
-      h: ship.cords.w,
-    },
+    w: ship.h,
+    h: ship.w,
   };
 
-  return canPlaceShip(board, rotationShip) && shipInBoard(rotationShip.cords);
+  return (
+    canPlaceShip(board, rotationShip) &&
+    shipInBoard({
+      x: rotationShip.x,
+      y: rotationShip.y,
+      w: rotationShip.w,
+      h: rotationShip.h,
+    })
+  );
 }
 
 // Возвращает корабль, который находится в точке (hoverX, hoverY)
@@ -74,7 +91,10 @@ export function getWreckedShip(
   board: ShipType[],
   cordCheck: ShipCordType
 ): ShipType | undefined {
-  return board.find(({ cords }) => !shipOverlaps(cordCheck, cords));
+  return board.find(
+    ship =>
+      !shipOverlaps(cordCheck, { x: ship.x, y: ship.y, w: ship.w, h: ship.h })
+  );
 }
 
 export function placeShipsRandomly(ships: ShipType[]): ShipType[] {
@@ -104,12 +124,10 @@ export function placeShipsRandomly(ships: ShipType[]): ShipType[] {
 
         const newShip: ShipType = {
           ...ship,
-          cords: {
-            x,
-            y,
-            w: isHorizontal ? length - 1 : 0,
-            h: isHorizontal ? 0 : length - 1,
-          },
+          x,
+          y,
+          w: isHorizontal ? length - 1 : 0,
+          h: isHorizontal ? 0 : length - 1,
         };
 
         if (canPlaceShip(placedShips, newShip)) {
