@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
 export const config = {
-  matcher: ['/auth/:path*', '/dashboard/:path*'],
+  matcher: ['/auth/:path*', '/profile/:path*'],
 };
 
 export default function middleware(request: NextRequest) {
@@ -13,7 +13,7 @@ export default function middleware(request: NextRequest) {
 
   if (isAuthPage) {
     if (session) {
-      return NextResponse.redirect(new URL('/dashboard/settings', url));
+      return NextResponse.redirect(new URL('/profile/settings', url));
     }
 
     return NextResponse.next();
