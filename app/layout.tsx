@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { FC, PropsWithChildren } from 'react';
 
+import { NotificationProvider } from '@/src/app/providers/NotificationProvider';
+import { SoundProvider } from '@/src/app/providers/SoundProvider';
 import { TanstackQueryProvider } from '@/src/app/providers/TanstackQueryProvider';
 import { ThemeProvider } from '@/src/app/providers/ThemeProvider';
 import { ToastProvider } from '@/src/app/providers/ToastProvider';
@@ -41,14 +43,18 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => {
             enableSystem
             disableTransitionOnChange
           >
-            <Header />
-            <main className='flex w-full flex-wrap items-center justify-center pt-[133px]'>
-              <div className='container mx-auto flex max-w-7xl flex-wrap items-center justify-center px-3'>
-                <ToastProvider />
-                {children}
-              </div>
-            </main>
-            <Footer />
+            <NotificationProvider>
+              <Header />
+              <SoundProvider>
+                <main className='flex w-full flex-wrap items-center justify-center pt-[133px]'>
+                  <div className='container mx-auto flex max-w-7xl flex-wrap items-center justify-center px-3'>
+                    <ToastProvider />
+                    {children}
+                  </div>
+                </main>
+              </SoundProvider>
+              <Footer />
+            </NotificationProvider>
           </ThemeProvider>
         </TanstackQueryProvider>
       </body>
